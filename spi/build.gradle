@@ -36,7 +36,7 @@ jacocoTestReport {
     reports {
         xml.required = false
         csv.required = false
-        html.destination file("${buildDir}/jacoco/")
+        html.outputLocation.set(file("${buildDir}/jacoco/"))
     }
 }
 check.dependsOn jacocoTestReport
@@ -106,7 +106,7 @@ publishing {
     }
     publications {
         shadow(MavenPublication) { publication ->
-            project.shadow.component(publication)
+            from components.shadow
             artifact sourcesJar
             artifact javadocJar
 

@@ -11,7 +11,7 @@ buildscript {
     ext {
         opensearch_group = "org.opensearch"
         isSnapshot = "true" == System.getProperty("build.snapshot", "true")
-        opensearch_version = System.getProperty("opensearch.version", "3.4.0-SNAPSHOT")
+        opensearch_version = System.getProperty("opensearch.version", "3.6.0-SNAPSHOT")
         buildVersionQualifier = System.getProperty("build.version_qualifier", "")
         asm_version = "9.7"
 
@@ -75,8 +75,10 @@ allprojects {
     apply from: "$rootDir/build-tools/repositories.gradle"
 
     plugins.withId('java') {
-        sourceCompatibility = JavaVersion.VERSION_21;
-        targetCompatibility = JavaVersion.VERSION_21;
+        java {
+            sourceCompatibility = JavaVersion.VERSION_21
+            targetCompatibility = JavaVersion.VERSION_21
+        }
     }
 
     plugins.withId('jacoco') {
@@ -88,8 +90,10 @@ allprojects {
 }
 
 subprojects {
-    configurations {
-        testImplementation.extendsFrom compileOnly
+    plugins.withId('java') {
+        configurations {
+            testImplementation.extendsFrom compileOnly
+        }
     }
 
     configurations.all {
